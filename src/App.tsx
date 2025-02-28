@@ -1,4 +1,3 @@
-import { ProfileForm } from '@/components/auth/ProfileForm';
 import { Layout } from '@/components/layout/Layout';
 import { Toaster } from '@/components/ui/sonner';
 import { supabase } from '@/lib/supabase';
@@ -39,11 +38,6 @@ function App() {
             path="dashboard"
             element={user ? <Dashboard /> : <Navigate to="/" />}
           />
-          <Route
-            path="profile"
-            element={user ? <ProfileForm /> : <Navigate to="/" />}
-          />
-          
         </Route>
       </Routes>
       <Toaster />
