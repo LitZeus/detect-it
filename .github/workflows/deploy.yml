@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # Change this if your default branch is different
+      - main
   pull_request:
     branches:
       - main
@@ -25,18 +25,20 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: npm install  # or pnpm install if using PNPM
+        run: npm install  # Change to pnpm install if using PNPM
 
-      - name: Build the project (Ignore TypeScript Errors)
-        run: npm run build || true
-
+      - name: Build the project
+        run: npm run build
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 
+      - name: Check if dist exists 🔍
+        run: ls -la && ls -la dist || echo "🚨 dist folder is missing!"
+
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          branch: gh-pages  # Deployment branch
-          folder: dist       # Vite outputs the build files to "dist"
+          branch: gh-pages
+          folder: dist  # Make sure this matches your build output
           clean: true
